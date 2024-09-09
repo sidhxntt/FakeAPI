@@ -1,0 +1,65 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+model Address {
+  id      Int    @id @default(autoincrement())
+  street  String
+  suite   String
+  city    String
+  zipcode String
+  users   User?  @relation("UserAddress")
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  name      String
+  username  String  @unique
+  email     String  @unique
+  addressID Int     @unique
+  address   Address @relation("UserAddress", fields: [addressID], references: [id])
+  phone     String  @unique
+  website   String  @unique
+  todos     Todos[] @relation("UserTodos")
+  albums    Album[] @relation("UserAlbums")
+  posts     Post[]  @relation("UserPosts")
+}
+
+model Todos {
+  id        Int     @id @default(autoincrement())
+  userID    Int
+  user      User    @relation("UserTodos", fields: [userID], references: [id])
+  title     String
+  completed Boolean
+}
+
+model Album {
+  id     Int     @id @default(autoincrement())
+  userID Int
+  user   User    @relation("UserAlbums", fields: [userID], references: [id])
+  title  String
+  image  Image[] @relation("AlbumImages")
+}
+
+model Image {
+  id           Int    @id @default(autoincrement())
+  albumID      Int
+  album        Album  @relation("AlbumImages", fields: [albumID], references: [id])
+  title        String
+  url          String
+  thumbnailUrl String
+}
+
+model Post {
+  id     Int    @id @default(autoincrement())
+  userID Int
+  user   User   @relation("UserPosts", fields: [userID], references: [id])
+  title  String
+  body   String
+}
