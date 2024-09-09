@@ -15,6 +15,7 @@ async function main() {
             suite: "Suite 729",
             city: "Aliyaview",
             zipcode: "45169",
+            userID: 7
           },
         },
         todos: {

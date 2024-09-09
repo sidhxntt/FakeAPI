@@ -8,15 +8,6 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model Address {
-  id      Int    @id @default(autoincrement())
-  street  String
-  suite   String
-  city    String
-  zipcode String
-  users   User?  @relation("UserAddress")
-}
-
 model User {
   id        Int     @id @default(autoincrement())
   name      String
@@ -25,10 +16,20 @@ model User {
   addressID Int     @unique
   phone     String  @unique
   website   String  @unique
+  address   Address @relation("UserAddress", fields: [addressID], references: [id])
+  todos     Todos[] @relation("UserTodos")
   albums    Album[] @relation("UserAlbums")
   posts     Post[]  @relation("UserPosts")
-  todos     Todos[] @relation("UserTodos")
-  address   Address @relation("UserAddress", fields: [addressID], references: [id])
+}
+
+model Address {
+  id      Int    @id @default(autoincrement())
+  userID  Int
+  users   User?  @relation("UserAddress")
+  street  String
+  suite   String
+  city    String
+  zipcode String
 }
 
 model Todos {

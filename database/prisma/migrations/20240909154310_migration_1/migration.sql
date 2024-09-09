@@ -1,15 +1,4 @@
 -- CreateTable
-CREATE TABLE "Address" (
-    "id" SERIAL NOT NULL,
-    "street" TEXT NOT NULL,
-    "suite" TEXT NOT NULL,
-    "city" TEXT NOT NULL,
-    "zipcode" TEXT NOT NULL,
-
-    CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
 CREATE TABLE "User" (
     "id" SERIAL NOT NULL,
     "name" TEXT NOT NULL,
@@ -20,6 +9,18 @@ CREATE TABLE "User" (
     "website" TEXT NOT NULL,
 
     CONSTRAINT "User_pkey" PRIMARY KEY ("id")
+);
+
+-- CreateTable
+CREATE TABLE "Address" (
+    "id" SERIAL NOT NULL,
+    "userID" INTEGER NOT NULL,
+    "street" TEXT NOT NULL,
+    "suite" TEXT NOT NULL,
+    "city" TEXT NOT NULL,
+    "zipcode" TEXT NOT NULL,
+
+    CONSTRAINT "Address_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateTable

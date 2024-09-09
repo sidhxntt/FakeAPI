@@ -15,6 +15,7 @@ async function main() {
             suite: "Apt. 556",
             city: "Gwenborough",
             zipcode: "92998-3874",
+            userID: 1
           },
         },
         todos: {
