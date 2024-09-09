@@ -45,7 +45,6 @@ CREATE TABLE "Album" (
 CREATE TABLE "Image" (
     "id" SERIAL NOT NULL,
     "albumID" INTEGER NOT NULL,
-    "userID" INTEGER NOT NULL,
     "title" TEXT NOT NULL,
     "url" TEXT NOT NULL,
     "thumbnailUrl" TEXT NOT NULL,
@@ -89,9 +88,6 @@ ALTER TABLE "Album" ADD CONSTRAINT "Album_userID_fkey" FOREIGN KEY ("userID") RE
 
 -- AddForeignKey
 ALTER TABLE "Image" ADD CONSTRAINT "Image_albumID_fkey" FOREIGN KEY ("albumID") REFERENCES "Album"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
-
--- AddForeignKey
-ALTER TABLE "Image" ADD CONSTRAINT "Image_userID_fkey" FOREIGN KEY ("userID") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "Post" ADD CONSTRAINT "Post_userID_fkey" FOREIGN KEY ("userID") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
