@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../prisma/prisma";
+import prisma from "../../../../../prisma/prisma";
 
 export async function GET(req: NextRequest) {
   try {
@@ -12,22 +12,22 @@ export async function GET(req: NextRequest) {
     const offset = (page - 1) * limit;
 
     // Fetch users with pagination
-    const users = await prisma.user.findMany({
+    const images = await prisma.image.findMany({
       skip: offset,
       take: limit,
     });
 
     // Optionally, get the total count of users
-    const totalUsers = await prisma.user.count();
+    const totalimages = await prisma.image.count();
 
     return NextResponse.json({
       meta: {
-        total: totalUsers,
+        total: totalimages,
         page,
         limit,
-        totalPages: Math.ceil(totalUsers / limit),
+        totalPages: Math.ceil(totalimages / limit),
       },
-      data: users,
+      data: images,
 
     }, { status: 200 });
   } catch (error) {

@@ -10,12 +10,12 @@ datasource db {
 
 model Address {
   id      Int    @id @default(autoincrement())
-  userID  Int
   street  String
   suite   String
   city    String
   zipcode String
-  User    User?
+  userID  Int    @unique
+  User    User   @relation(fields: [userID], references: [id])
 }
 
 model Album {
@@ -52,15 +52,14 @@ model Todos {
 }
 
 model User {
-  id        Int     @id @default(autoincrement())
-  name      String
-  username  String  @unique
-  email     String  @unique
-  addressID Int     @unique
-  phone     String  @unique
-  website   String  @unique
-  Album     Album[]
-  Post      Post[]
-  Todos     Todos[]
-  Address   Address @relation(fields: [addressID], references: [id])
+  id       Int      @id @default(autoincrement())
+  name     String
+  username String   @unique
+  email    String   @unique
+  phone    String   @unique
+  website  String   @unique
+  Address  Address?
+  Album    Album[]
+  Post     Post[]
+  Todos    Todos[]
 }

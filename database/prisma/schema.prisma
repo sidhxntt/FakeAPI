@@ -8,44 +8,22 @@ datasource db {
   directUrl = env("DIRECT_URL")
 }
 
-model User {
-  id        Int     @id @default(autoincrement())
-  name      String
-  username  String  @unique
-  email     String  @unique
-  addressID Int     @unique
-  phone     String  @unique
-  website   String  @unique
-  address   Address @relation("UserAddress", fields: [addressID], references: [id])
-  todos     Todos[] @relation("UserTodos")
-  albums    Album[] @relation("UserAlbums")
-  posts     Post[]  @relation("UserPosts")
-}
-
 model Address {
   id      Int    @id @default(autoincrement())
-  userID  Int
-  users   User?  @relation("UserAddress")
   street  String
   suite   String
   city    String
   zipcode String
-}
-
-model Todos {
-  id        Int     @id @default(autoincrement())
-  userID    Int
-  title     String
-  completed Boolean
-  user      User    @relation("UserTodos", fields: [userID], references: [id])
+  user    User   @relation(fields: [userID], references: [id])
+  userID  Int    @unique
 }
 
 model Album {
   id     Int     @id @default(autoincrement())
   userID Int
   title  String
-  user   User    @relation("UserAlbums", fields: [userID], references: [id])
-  image  Image[] @relation("AlbumImages")
+  User   User    @relation(fields: [userID], references: [id])
+  Image  Image[]
 }
 
 model Image {
@@ -54,7 +32,7 @@ model Image {
   title        String
   url          String
   thumbnailUrl String
-  album        Album  @relation("AlbumImages", fields: [albumID], references: [id])
+  Album        Album  @relation(fields: [albumID], references: [id])
 }
 
 model Post {
@@ -62,5 +40,26 @@ model Post {
   userID Int
   title  String
   body   String
-  user   User   @relation("UserPosts", fields: [userID], references: [id])
+  User   User   @relation(fields: [userID], references: [id])
+}
+
+model Todos {
+  id        Int     @id @default(autoincrement())
+  userID    Int
+  title     String
+  completed Boolean
+  User      User    @relation(fields: [userID], references: [id])
+}
+
+model User {
+  id        Int     @id @default(autoincrement())
+  name      String
+  username  String  @unique
+  email     String  @unique
+  address   Address?
+  phone     String  @unique
+  website   String  @unique
+  Album     Album[]
+  Post      Post[]
+  Todos     Todos[]
 }
