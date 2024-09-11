@@ -1,6 +1,26 @@
 import { NextRequest, NextResponse } from "next/server";
 import prisma from "../../../../prisma/prisma";
 
+interface UserInput {
+  name?: string;
+  username?: string;
+  email?: string;
+  address?: {
+    street?: string;
+    suite?: string;
+    city?: string;
+    zipcode?: string;
+  };
+  phone?: string;
+  website?: string;
+  todo?:{
+    userID: number
+    title?: string;
+    completed?: boolean;
+  }
+  
+}
+
 export async function GET(
   req: NextRequest,
   { params }: { params: { userID: string } }
@@ -70,20 +90,6 @@ export async function DELETE(
   }
 }
 
-interface UserInput {
-  name?: string;
-  username?: string;
-  email?: string;
-  address?: {
-    street?: string;
-    suite?: string;
-    city?: string;
-    zipcode?: string;
-  };
-  phone?: string;
-  website?: string;
-  
-}
 export async function PATCH(
   req: NextRequest,
   { params }: { params: { userID: string } }
@@ -91,7 +97,7 @@ export async function PATCH(
   try {
     const userID = parseInt(params.userID, 10);
     const body = await req.json();
-    const { name, username, email, address, phone, website } = body as UserInput;
+    const { name, username, email, address, phone, website, todo } = body as UserInput;
 
     if (isNaN(userID)) {
       return NextResponse.json({ error: "Invalid user ID" }, { status: 400 });
@@ -114,7 +120,8 @@ export async function PATCH(
             city: address?.city,
             zipcode: address?.zipcode,
           },
-        }
+        },
+       
       }
     });
     if (!user) {
@@ -131,3 +138,4 @@ export async function PATCH(
     );
   }
 }
+
