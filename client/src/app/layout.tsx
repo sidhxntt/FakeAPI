@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import Navbar from "@/components/Navbar";
+import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
   title: "Rapid API",
@@ -20,8 +20,8 @@ export default function RootLayout({
           <link rel="icon" href="/logo.png" />
         </head>
       <body className={`antialiased`}>
-      <Navbar/>
         {children}
+        <Footer/>
         </body>
     </html>
   );

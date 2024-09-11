@@ -2,9 +2,9 @@ import Link from "next/link";
 import { FaGithub, FaLinkedin, FaInstagram } from "react-icons/fa";
 import { FaXTwitter } from "react-icons/fa6";
 
-const Navbar = () => {
+const Footer = () => {
   return (
-    <header className="sticky top-0 bg-[#0a0a0a] backdrop-blur-md mb-12 p-4 z-50">
+    <footer className="sticky top-0 bg-[#0a0a0a] backdrop-blur-md mb-12 mt-[-2cm] p-4 z-50">
       <div className="flex items-center justify-end p-4 mx-auto max-w-7xl">
         <div className="flex items-center space-x-6">
           <Link className="text-white" href="https://x.com/sidhxntt" target="_blank" rel="noopener noreferrer">
@@ -21,8 +21,8 @@ const Navbar = () => {
           </Link>
         </div>
       </div>
-    </header>
+    </footer>
   );
 };
 
-export default Navbar;
+export default Footer;
